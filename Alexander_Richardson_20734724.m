@@ -9,7 +9,7 @@
 % establish connection to arduino (it seems that once this has been done
 % once it does not need to be done again so this line is commented to avoid
 % errors when running the code to test it)
-% a = arduino("COM6", "Uno")
+a = arduino("COM6", "Uno")
 % loop blinking the light 5 times
 for i = 1:5
     % turn light on
@@ -39,7 +39,7 @@ temperatures = [];
 % assign temperature coefficient and zero-degree voltage of thermistor to
 % variables
 Tc = 10;
-V0c = 500;
+V0c = 0.5;
 while duration > 0
     % read voltage and assign it to a temporary variable, then append it to
     % the array
