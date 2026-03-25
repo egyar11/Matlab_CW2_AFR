@@ -6,9 +6,7 @@
 
 % Insert answers here
 
-% establish connection to arduino (it seems that once this has been done
-% once it does not need to be done again so this line is commented to avoid
-% errors when running the code to test it)
+% establish connection to arduino
 a = arduino("COM6", "Uno")
 % loop blinking the light 5 times
 for i = 1:5
@@ -38,7 +36,7 @@ temperatures = [];
 % will have passed
 % assign temperature coefficient and zero-degree voltage of thermistor to
 % variables
-Tc = 10;
+Tc = 0.01;
 V0c = 0.5;
 while duration > 0
     % read voltage and assign it to a temporary variable, then append it to
@@ -59,6 +57,66 @@ minTemperature = min(temperatures);
 maxTemperature = max(temperatures);
 % find average temperature
 averageTemperature = mean(temperatures);
+
+% plot temperature/time, first an array that golds the time from start for
+% each temperature reading must be created since duration counts down from
+% 600 seconds
+times = 0:(length(temperatures)-1);
+% create plot
+plot(times, temperatures)
+% create axis labels including units
+xlabel('Time (s)')
+ylabel('Temperature (°C)')
+
+% get current date
+date= datetime('today');
+% change date to desired format
+date.Format = 'd/M/yyyy';
+date = char(date);
+% print current date
+toPrint = sprintf('Data logging initiated - %s', date);
+disp(toPrint)
+% print location
+toPrint = sprintf('Location - Nottingham');
+disp(toPrint)
+% iterate through each minute from 0 to 10, printing the temperature
+for i = 0:10
+    toPrint = sprintf('\nMinute        %.0f\nTemperature   %.2f C', i, ...
+        temperatures(i + 1));
+    disp(toPrint)
+end
+% print maximum, minimum, and average tremperature
+toPrint = sprintf('\nMax temp      %.2f C', maxTemperature);
+disp(toPrint)
+toPrint = sprintf('Min temp      %.2f C', minTemperature);
+disp(toPrint)
+toPrint = sprintf('Average temp  %.2f C', averageTemperature);
+disp(toPrint)
+% print message that data logging has ended
+toPrint = sprintf('\nData logging terminated');
+disp(toPrint)
+
+% open file for writing capsule temperatures
+fileID = fopen('capsule_temperature.txt', 'w');
+% write all of the above text to the file using fprintf
+fprintf(fileID, 'Data logging initiated - %s\n', date);
+fprintf(fileID, 'Location - Nottingham\n');
+for i = 0:10
+    fprintf(fileID, '\nMinute        %.0f\nTemperature   %.2f C\n', i, ...
+        temperatures(i + 1));
+end
+fprintf(fileID, '\nMax temp      %.2f C\n', maxTemperature);
+fprintf(fileID, 'Min temp      %.2f C\n', minTemperature);
+fprintf(fileID, 'Average temp  %.2f C\n', averageTemperature);
+fprintf(fileID, '\nData logging terminated');
+% close the file
+fclose(fileID);
+
+% open generated file and check that the data has been written correctly
+fileID = fopen('capsule_temperature.txt', 'r');
+fileText = fscanf(fileID, '%c');
+fclose(fileID);
+disp(fileText)
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 
