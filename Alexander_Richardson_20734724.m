@@ -6,6 +6,22 @@
 
 % Insert answers here
 
+% establish connection to arduino (it seems that once this has been done
+% once it does not need to be done again so this line is commented to avoid
+% errors)
+% a = arduino("COM6", "Uno")
+% loop blinking the light 5 times
+for i = 1:5
+    % turn light on
+    writeDigitalPin(a,'D13',1)
+    % wait 5 seconds
+    pause(0.5)
+    % turn light off
+    writeDigitalPin(a,'D13',0)
+    % wait 5 seconds
+    pause(0.5)
+end
+
 %% TASK 1 - READ TEMPERATURE DATA, PLOT, AND WRITE TO A LOG FILE [20 MARKS]
 
 % Insert answers here
