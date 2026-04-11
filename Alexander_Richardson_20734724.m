@@ -7,7 +7,7 @@
 % Insert answers here
 
 % establish connection to arduino
-a = arduino("COM6", "Uno")
+a = arduino("COM6", "Uno");
 % loop blinking the light 5 times
 for i = 1:5
     % turn light on
@@ -123,11 +123,11 @@ disp(fileText)
 % Insert answers here
 
 % call temperature monitor function
-temp_monitor(a)
+% temp_monitor(a)
 %% TASK 3 - ALGORITHMS – TEMPERATURE PREDICTION [30 MARKS]
 
 % Insert answers here
-
+temp_prediction(a)
 
 %% TASK 4 - REFLECTIVE STATEMENT [5 MARKS]
 
