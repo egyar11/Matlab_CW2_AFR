@@ -1,4 +1,15 @@
 function temp_prediction(a)
+    % TEMP_PREDICTION monitors the rate of change of temperature over the 
+    % last 10 seconds and uses it to predict the temperature after 5 
+    % minutes.
+    %
+    % The temperature is read using a thermistor every second and the last 
+    % 10 readings are stored. These are then used to find the rate of 
+    % change of the temperature and if it is above 4°C/min a red LED is 
+    % lit, if it is below -4°C/min a yellow LED is lit, otherwise a green 
+    % LED is lit. The rate of change of temperature is then used to predict
+    % the temperature in 5 minutes.
+
     % get first reading for temperature
     % read voltage from thermistor
     voltage = readVoltage(a,"A0");
@@ -36,5 +47,22 @@ function temp_prediction(a)
         % predict temperature in 5 minutes and print it to the screen
         predictedTemp = temperature + (tempChangeRate * 300)
         fprintf('Predicted temperature in 5 minutes = %f °C',predictedTemp)
+        % if rate of change of temperature is greater than 4°C/min turn on
+        % red LED and turn green and yellow LEDs off
+        if tempChangeRate > (4/60)
+            writeDigitalPin(a,'D13',1)
+            writeDigitalPin(a,'D12',0)
+            writeDigitalPin(a,'D11',0)
+        % if rate of change of temperature is less than -4°C/min turn on
+        % yellow LED and turn green and red LEDs off
+        elseif tempChangeRate < (-4/60)
+            writeDigitalPin(a,'D13',0)
+            writeDigitalPin(a,'D12',1)
+            writeDigitalPin(a,'D11',0)
+        % otherwise turn green LED on and yellow and red LEDs off
+        else
+            writeDigitalPin(a,'D13',0)
+            writeDigitalPin(a,'D12',0)
+            writeDigitalPin(a,'D11',1)
     end
 end

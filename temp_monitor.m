@@ -1,13 +1,13 @@
 function temp_monitor(a)
-    % TEMP_MONITOR monitors the temperature in real time and indicates if it is
-    % within the acceptable range. 
+    % TEMP_MONITOR monitors the temperature in real time and indicates if 
+    % it is within the acceptable range. 
     % 
     % Every second the voltage is measured through a thermistor that is 
     % connected to an arduino and calculates the thermistor temperature. A 
-    % graph of temperature against time is plotted and updated live. When the 
-    % temperature is within the acceptable range of 18-24 degrees C, a green 
-    % LED is lit, when it is below the range a yellow LED blinks at 0.5s 
-    % intervals, when it is above the range a red LED blinks at 0.25s 
+    % graph of temperature against time is plotted and updated live. When 
+    % the temperature is within the acceptable range of 18-24 degrees C, a 
+    % green LED is lit, when it is below the range a yellow LED blinks at 
+    % 0.5s intervals, when it is above the range a red LED blinks at 0.25s 
     % intervals. The arduino object is passed as an argument.
 
     % create variable to hold time in seconds since the start of the 
